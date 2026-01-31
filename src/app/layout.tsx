@@ -26,6 +26,7 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         {/* Google AdSense */}
+        <meta name="google-adsense-account" content="ca-pub-6064291457498538" />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6064291457498538"
