@@ -1,7 +1,9 @@
 import { db } from "@/lib/db";
 import { tests } from "@/lib/db/schema";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://quizlab.com";
+export const dynamic = "force-dynamic";
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-gamma.vercel.app";
 
 export async function GET() {
   const allTests = await db.select().from(tests);

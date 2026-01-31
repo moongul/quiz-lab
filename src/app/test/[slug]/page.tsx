@@ -3,9 +3,45 @@ import { db } from "@/lib/db";
 import { tests, questions, options } from "@/lib/db/schema";
 import { eq, asc } from "drizzle-orm";
 import TestClient from "@/components/TestClient";
+import type { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const test = await db.select().from(tests).where(eq(tests.slug, slug)).get();
+
+  if (!test) return {};
+
+  const ogUrl = new URL(`${process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-gamma.vercel.app"}/api/og`);
+  ogUrl.searchParams.set("title", test.title);
+  ogUrl.searchParams.set("desc", test.description);
+
+  return {
+    title: `${test.title} | Quiz Lab`,
+    description: test.description,
+    openGraph: {
+      title: test.title,
+      description: test.description,
+      type: "website",
+      images: [
+        {
+          url: ogUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: test.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: test.title,
+      description: test.description,
+      images: [ogUrl.toString()],
+    },
+  };
 }
 
 export default async function TestPage({ params }: PageProps) {
@@ -42,11 +78,34 @@ export default async function TestPage({ params }: PageProps) {
     })
   );
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Quiz",
+    "name": test.title,
+    "description": test.description,
+    "hasPart": testQuestions.map((q) => ({
+      "@type": "Question",
+      "name": q.content,
+      "suggestedAnswer": questionsWithOptions
+        .find(qo => qo.id === q.id)
+        ?.options.map(opt => ({
+          "@type": "Answer",
+          "text": opt.content
+        }))
+    }))
+  };
+
   return (
-    <TestClient
-      testSlug={slug}
-      testTitle={test.title}
-      questions={questionsWithOptions}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <TestClient
+        testSlug={slug}
+        testTitle={test.title}
+        questions={questionsWithOptions}
+      />
+    </>
   );
 }
