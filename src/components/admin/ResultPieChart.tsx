@@ -41,7 +41,7 @@ export default function ResultPieChart({ data }: { data: ResultData[] }) {
           ))}
         </Pie>
         <Tooltip 
-          formatter={(value: number) => [`${value}명`, 'Count']}
+          formatter={(value: any) => [`${value}명`, 'Count']}
           contentStyle={{ borderRadius: '8px', border: 'none', fontSize: '12px' }}
         />
         <Legend 
