@@ -500,7 +500,7 @@ async function seedTest(testData: TestData) {
   await db.insert(tests).values({
     ...test,
     thumbnailUrl: null,
-    totalParticipants: Math.floor(Math.random() * 5000) + 100,
+    totalParticipants: 0,
   }).onConflictDoNothing();
 
   for (const q of qs) {
