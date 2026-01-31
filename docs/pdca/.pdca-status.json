@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-01-31T06:09:00+09:00",
+  "activeFeatures": [
+    {
+      "name": "quiz-core",
+      "phase": "check",
+      "status": "baseline",
+      "matchRate": 92,
+      "iteration": 0,
+      "documents": {
+        "plan": null,
+        "design": null,
+        "analysis": "docs/pdca/03-analysis/quiz-core.analysis.md",
+        "report": null
+      },
+      "createdAt": "2026-01-31",
+      "updatedAt": "2026-01-31",
+      "notes": "Baseline analysis - reverse engineered from existing implementation"
+    }
+  ],
+  "archivedFeatures": [],
+  "config": {
+    "matchRateThreshold": 90,
+    "maxIterations": 5
+  }
+}
