@@ -3,7 +3,7 @@ import { tests } from "@/lib/db/schema";
 
 export const dynamic = "force-dynamic";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-gamma.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-eight.vercel.app";
 
 export async function GET() {
   const allTests = await db.select().from(tests);

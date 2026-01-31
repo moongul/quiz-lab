@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!test) return {};
 
-  const ogUrl = new URL(`${process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-gamma.vercel.app"}/api/og`);
+  const ogUrl = new URL(`${process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-eight.vercel.app"}/api/og`);
   ogUrl.searchParams.set("title", test.title);
   ogUrl.searchParams.set("desc", test.description);
 
