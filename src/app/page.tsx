@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { tests } from "@/lib/db/schema";
 import { desc } from "drizzle-orm";
 
+export const dynamic = "force-dynamic";
+
 const TEST_EMOJIS: Record<string, string> = {
   "animal-personality": "🐾",
   "thinking-feeling": "🧠",
