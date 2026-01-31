@@ -14,6 +14,11 @@ const TEST_EMOJIS: Record<string, string> = {
   "mz-generation": "📱",
   "money-type": "💰",
   "work-style": "💼",
+  "smartphone-addiction": "🤳",
+  "bread-personality": "🥐",
+  "travel-style": "✈️",
+  "friendship-style": "🤝",
+  "mental-age": "👶",
 };
 
 const CARD_COLORS = [
@@ -27,6 +32,11 @@ const CARD_COLORS = [
   "from-cyan-500 to-blue-500",
   "from-yellow-500 to-amber-500",
   "from-teal-500 to-green-500",
+  "from-indigo-500 to-blue-600",
+  "from-orange-400 to-red-500",
+  "from-lime-500 to-green-600",
+  "from-fuchsia-500 to-pink-600",
+  "from-sky-400 to-blue-500",
 ];
 
 export default async function Home() {
@@ -64,7 +74,7 @@ export default async function Home() {
           </span>
         </div>
         
-        <div className="grid gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {allTests.length === 0 ? (
             <div className="text-center py-16 glass-card rounded-2xl">
               <span className="text-5xl block mb-4">🔍</span>
