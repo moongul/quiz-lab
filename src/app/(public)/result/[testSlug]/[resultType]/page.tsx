@@ -25,12 +25,31 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!result) return { title: "결과를 찾을 수 없습니다" };
 
+  const ogUrl = new URL(`${process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-eight.vercel.app"}/api/og`);
+  ogUrl.searchParams.set("title", `${test.title} 결과`);
+  ogUrl.searchParams.set("desc", `나의 유형은 '${result.title}'입니다.\n${result.description.slice(0, 50)}...`);
+
   return {
-    title: `${result.title} - ${test.title}`,
+    title: `${result.title} | ${test.title} 결과`,
     description: result.description,
     openGraph: {
-      title: `${result.title} - ${test.title}`,
+      title: `${result.title} | ${test.title} 결과`,
       description: result.description,
+      type: "website",
+      images: [
+        {
+          url: ogUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: `${test.title} - ${result.title}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${result.title} | ${test.title} 결과`,
+      description: result.description,
+      images: [ogUrl.toString()],
     },
   };
 }
@@ -55,7 +74,7 @@ export default async function ResultPage({ params }: PageProps) {
     .where(eq(resultTypes.testId, test.id));
 
   const totalCount = allResults.reduce((sum, r) => sum + (r.count || 0), 0);
-  const percentage = totalCount > 0 
+  const percentage = totalCount > 0
     ? Math.round(((result.count || 0) / totalCount) * 100)
     : 0;
 
@@ -70,11 +89,11 @@ export default async function ResultPage({ params }: PageProps) {
         <div className="inline-block px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm font-bold mb-4">
           ✨ 당신의 유형
         </div>
-        
+
         <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-gradient">
           {result.title}
         </h1>
-        
+
         <p className="text-gray-600 leading-relaxed text-lg">
           {result.description}
         </p>
