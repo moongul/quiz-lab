@@ -22,6 +22,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${test.title} | Quiz Lab`,
     description: test.description,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-eight.vercel.app"}/test/${test.slug}`,
+    },
     openGraph: {
       title: test.title,
       description: test.description,
@@ -78,22 +81,42 @@ export default async function TestPage({ params }: PageProps) {
     })
   );
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Quiz",
-    "name": test.title,
-    "description": test.description,
-    "hasPart": testQuestions.map((q) => ({
-      "@type": "Question",
-      "name": q.content,
-      "suggestedAnswer": questionsWithOptions
-        .find(qo => qo.id === q.id)
-        ?.options.map(opt => ({
-          "@type": "Answer",
-          "text": opt.content
-        }))
-    }))
-  };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Quiz",
+      "name": test.title,
+      "description": test.description,
+      "hasPart": testQuestions.map((q) => ({
+        "@type": "Question",
+        "name": q.content,
+        "suggestedAnswer": questionsWithOptions
+          .find(qo => qo.id === q.id)
+          ?.options.map(opt => ({
+            "@type": "Answer",
+            "text": opt.content
+          }))
+      }))
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-eight.vercel.app"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": test.title,
+          "item": `${process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-eight.vercel.app"}/test/${slug}`
+        }
+      ]
+    }
+  ];
 
   return (
     <>

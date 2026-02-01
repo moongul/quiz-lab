@@ -1,12 +1,12 @@
 "use client";
 
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
   Cell
 } from "recharts";
@@ -25,13 +25,14 @@ export default function TestBarChart({ data }: { data: ChartData[] }) {
       <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#eee" />
         <XAxis type="number" hide />
-        <YAxis 
-          dataKey="shortName" 
-          type="category" 
-          width={150} 
+        <YAxis
+          dataKey="shortName"
+          type="category"
+          width={150}
           tick={{ fontSize: 12, fill: '#666' }}
+          interval={0}
         />
-        <Tooltip 
+        <Tooltip
           contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
         />
         <Bar dataKey="participants" radius={[0, 4, 4, 0]}>

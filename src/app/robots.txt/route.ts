@@ -2,7 +2,7 @@ export async function GET() {
   const robotsTxt = `User-agent: *
 Allow: /
 
-Sitemap: ${process.env.NEXT_PUBLIC_SITE_URL || "https://quizlab.com"}/sitemap.xml
+Sitemap: ${process.env.NEXT_PUBLIC_SITE_URL || "https://quiz-lab-eight.vercel.app"}/sitemap.xml
 `;
 
   return new Response(robotsTxt, {
